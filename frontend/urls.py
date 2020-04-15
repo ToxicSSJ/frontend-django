@@ -13,11 +13,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from luminosity import views as luminosity_views
 from django.contrib import admin
 from django.urls import path, re_path
-from luminosity.views import StartView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-	re_path(r'^$', StartView.as_view()),
+	path('', luminosity_views.luminosity, name='luminosity'),
 ]

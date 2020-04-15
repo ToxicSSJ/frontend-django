@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import requests
 
 # Vista de inicio
 # o punto de partida
@@ -7,5 +8,16 @@ from django.shortcuts import render
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-class StartView(TemplateView):
-    template_name = 'index.html'
+def luminosity(request):
+    if 'value' in request.GET:
+        value = request.GET['value']
+        if value:
+            args = {'type': 'number', 'value': value}
+            response = requests.post('http://127.0.0.1:8000/luminosity/', args)
+            measure_json = response.json()
+    response = requests.get('http://127.0.0.1:8000/luminosity/')
+    entries = response.json()
+    return render(request, "luminosity.html", {'entries': entries})
+
+#class StartView(TemplateView):
+#    template_name = 'index.html'
